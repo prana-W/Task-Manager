@@ -1,13 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import TaskFunction from "./TaskFunction";
+import useTaskInfo from "../hooks/useTaskInfo";
 
 function TaskComponent({ children, taskId }) {
   const navigate = useNavigate();
-  const taskList = useSelector((state) => state.task.tasks);
 
-  const taskData = taskList.filter((task) => task.taskId == taskId);
+  const taskData = useTaskInfo(taskId);
 
   const openTaskManager = () => {
     navigate(`/task/${taskId}`);
@@ -22,9 +21,9 @@ function TaskComponent({ children, taskId }) {
         {children}
       </button>
       <span className="ml-4 text-xs text-gray-500 dark:text-gray-400">
-        ⏳ {taskData[0].timeRemaining} hrs left
+        ⏳ {taskData.timeRemaining} hrs left
       </span>
-     <TaskFunction taskId={taskId}/>
+      <TaskFunction taskId={taskId} />
     </div>
   );
 }

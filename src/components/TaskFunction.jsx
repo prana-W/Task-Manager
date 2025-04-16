@@ -3,7 +3,10 @@ import { Button, Input } from ".";
 import useTaskInfo from "../hooks/useTaskInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { editStatus } from "../features/tasks/taskSlice";
-import { Toaster, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
+
+//todo: improve TaskFunction 
+//first call status and then make the changes accordingly, in the UI
 
 function TaskFunction({ taskId }) {
   const [btnTxt, setBtnTxt] = useState("Start");
@@ -45,7 +48,6 @@ function TaskFunction({ taskId }) {
 
   return (
     <>
-    <Toaster position="top-left"/>
       <button onClick={handleStatusChange}>{btnTxt}</button>
       <input
         id={taskId}

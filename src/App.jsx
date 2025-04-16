@@ -1,33 +1,48 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Header, Footer } from "./components";
 import { Outlet } from "react-router-dom";
-import {ThemeContext, ThemeProvider, useTheme} from './contexts'
-import { Analytics } from "@vercel/analytics/react"
+import { ThemeContext, ThemeProvider, useTheme } from "./contexts";
+import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { reduceTime } from "./features/tasks/taskSlice";
 
 function App() {
+  const [themeMode, setThemeMode] = useState("light");
+  const dispatch = useDispatch();
 
-  const [themeMode, setThemeMode] = useState('light')
+  let intervalReference;
 
-  useEffect (() => {
+  const updateTime = () => {
+    dispatch(reduceTime());
+  }
 
-    document.querySelector('html').classList.remove('light', 'dark')
-    document.querySelector('html').classList.add(themeMode)
+  useEffect(() => {
 
-  }, [themeMode])
+    clearInterval(intervalReference);
+
+    intervalReference = setInterval(updateTime, 1000); //add the same time interval as in the timeSlice method
+  }, []);
+
+  useEffect(() => {
+    document.querySelector("html").classList.remove("light", "dark");
+    document.querySelector("html").classList.add(themeMode);
+  }, [themeMode]);
 
   const toLightTheme = () => {
-    setThemeMode('light')
-  }
+    setThemeMode("light");
+  };
 
   const toDarkTheme = () => {
-    setThemeMode('dark')
-  }
+    setThemeMode("dark");
+  };
 
   return (
     <>
-    <ThemeProvider value={{themeMode, toLightTheme, toDarkTheme}}>
-      <Header/>
+      <ThemeProvider value={{ themeMode, toLightTheme, toDarkTheme }}>
+        <Header />
       </ThemeProvider>
+      <Toaster position="top-left" />
       <Outlet />
       <Footer />
       <Analytics />

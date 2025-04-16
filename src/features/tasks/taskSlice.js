@@ -5,11 +5,9 @@ const initialState = {
     {
       taskName: "test_task",
       taskId: "test",
-      
       status: "pending", //pending (when not started), ongoing (when started || resumed), paused (when started but paused), completed (when task is finished)
-
-      timeAssigned: 10000, //total time asssigned in ms
-      timeRemaining: 10000, //time remaining (timeAssigned - timeDedicated)
+      timeAssigned: 100000, //total time asssigned in ms
+      timeRemaining: 100000, //time remaining (timeAssigned - timeDedicated)
     },
     {
       taskName: "test_task_2",
@@ -34,8 +32,7 @@ const taskSlice = createSlice({
         timeRemaining: null, //time remaining (timeAssigned - timeDedicated)
       };
 
-      state.tasks = [{...newTask, ...action.payload}, ...state.tasks]
-
+      state.tasks = [{ ...newTask, ...action.payload }, ...state.tasks];
     },
     editTodo: (state, action) => {
       state.tasks = state.tasks.map((task) =>
@@ -45,8 +42,9 @@ const taskSlice = createSlice({
       );
     },
     deleteTodo: (state, action) => {
-      state.tasks = state.tasks.filter ((task) => task.taskId != action.payload)
+      state.tasks = state.tasks.filter((task) => task.taskId != action.payload);
     },
+
     editStatus: (state, action) => {
       state.tasks = state.tasks.map((task) =>
         task.taskId == action.payload.taskId
@@ -54,8 +52,18 @@ const taskSlice = createSlice({
           : task
       );
     },
+    reduceTime: (state, action) => {
+      state.tasks = state.tasks.map((task) => {
+        if (task.status == "ongoing") {
+          const newTimeRemaining = task.timeRemaining - 1000;
+          return { ...task, timeRemaining: newTimeRemaining };
+        } else return task;
+      });
+    },
   },
 });
 
-export const { editTodo, editStatus, addTodo, deleteTodo } = taskSlice.actions;
+export const { editTodo, editStatus, addTodo, deleteTodo, reduceTime } =
+  taskSlice.actions;
+
 export default taskSlice.reducer;

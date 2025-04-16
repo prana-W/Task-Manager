@@ -3,6 +3,7 @@ import { Input, Button, TaskComponent } from "../components/index";
 import { useSelector, useDispatch } from "react-redux";
 import Logo from "../assets/task_brief.svg";
 import { addTodo } from "../features/tasks/taskSlice";
+import {toast} from 'react-hot-toast'
 
 function Home() {
   const dispatch = useDispatch();
@@ -28,6 +29,19 @@ function Home() {
       })
     );
 
+    // toast.success ('Task was added successfully!')
+    toast.custom((t) => (
+      <div
+        className={`${
+          t.visible ? "animate-enter" : "animate-leave"
+        } max-w-sm w-full bg-neutral-900 border border-orange-500 text-white px-4 py-3 rounded-2xl shadow-lg flex items-start gap-3`}
+      >
+        <div className="text-orange-400 text-xl">💡</div>
+        <div className="text-sm leading-snug">
+          You can <b>double tap or double click</b> on any task to open the task dashboard.
+        </div>
+      </div>
+    ));
     taskRef.current.value = "";
     setBtnTxt("Add");
     setInputTxt("Enter your task...");
