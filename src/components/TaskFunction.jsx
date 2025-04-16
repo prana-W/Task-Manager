@@ -3,6 +3,7 @@ import { Button, Input } from ".";
 import useTaskInfo from "../hooks/useTaskInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { editStatus } from "../features/tasks/taskSlice";
+import { Toaster, toast } from 'react-hot-toast';
 
 function TaskFunction({ taskId }) {
   const [btnTxt, setBtnTxt] = useState("Start");
@@ -32,15 +33,19 @@ function TaskFunction({ taskId }) {
     if (isComplete) return;
     if (btnTxt == "Start") {
       setBtnTxt("Pause");
+      toast.success ('Task has been marked as started!')
     } else if (btnTxt == "Pause") {
       setBtnTxt("Resume");
+      toast.success ('Task was paused!')
     } else if (btnTxt == "Resume") {
+      toast.success ('Task was resumed!')
       setBtnTxt("Pause");
     }
   };
 
   return (
     <>
+    <Toaster position="top-left"/>
       <button onClick={handleStatusChange}>{btnTxt}</button>
       <input
         id={taskId}
