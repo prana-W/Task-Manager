@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { editTodo } from "../features/tasks/taskSlice";
 import { useNavigate } from "react-router-dom";
+import useTaskInfo from "../hooks/useTaskInfo";
 
 //todo: Propagate changes when task is edited (in all places)
 
@@ -17,15 +18,12 @@ function TaskDashboard() {
   const taskId = useParams();
   const taskRef = useRef(null);
   const dispatch = useDispatch();
-  const tasksList = useSelector((state) => state.task.tasks); //this is an array containing objects of tasks data
 
-  //reauiredTaskData[0] gives us the object of the actual task required
-  const requiredTaskData = tasksList.filter(
-    (task) => task.taskId == taskId.taskId
-  );
+  //it returns the required task object
+  const taskData = useTaskInfo(taskId.taskId);
 
   useEffect(() => {
-    taskRef.current.value = requiredTaskData[0].taskName;
+    taskRef.current.value = taskData.taskName;
   }, []);
 
   const handleBtnLogic = () => {
@@ -57,24 +55,18 @@ function TaskDashboard() {
 
       <div className="mt-6 space-y-3 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-6 rounded-2xl shadow-inner">
         <h2 className="text-lg font-semibold">
-          Status:{" "}
-          <span className="font-normal">{requiredTaskData[0].status}</span>
+          Status: <span className="font-normal">{taskData.status}</span>
         </h2>
         <h2 className="text-lg font-semibold">
           Time allotted:{" "}
-          <span className="font-normal">
-            {requiredTaskData[0].timeAssigned} hrs
-          </span>
+          <span className="font-normal">{taskData.timeAssigned} hrs</span>
         </h2>
         <h2 className="text-lg font-semibold">
           Time remaining:{" "}
-          <span className="font-normal">
-            {requiredTaskData[0].timeRemaining} hrs
-          </span>
+          <span className="font-normal">{taskData.timeRemaining} hrs</span>
         </h2>
         <h4 className="text-sm text-gray-600 dark:text-gray-400">
-          Created on:{" "}
-          <span>{new Date(requiredTaskData[0].taskId).toString()}</span>
+          Created on: <span>{new Date(taskData.taskId).toString()}</span>
         </h4>
       </div>
       <br />

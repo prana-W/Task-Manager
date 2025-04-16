@@ -1,9 +1,14 @@
 import { useSelector } from "react-redux";
 
-function useTaskInfo (taskId) {
-    const taskData = useSelector((state) => state.task.tasks)
+//it takes the taskId (a string) as an argument
+export default function useTaskInfo(taskId) {
+  if (!taskId) return false;
 
-    const [task, setTask] = useState(taskData)
+  //this is an array containing objects of tasks data
+  const tasksList = useSelector((state) => state.task.tasks);
 
-    
+  //this gives us an array with single element (where the first element is the required task object)
+  const requiredTaskData = tasksList.filter((task) => task.taskId == taskId);
+
+  return requiredTaskData[0];
 }
