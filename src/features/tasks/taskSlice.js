@@ -3,20 +3,27 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   tasks: [
     {
-      taskName: "test_task",
-      taskId: "test",
+      taskName: "I am a test task",
+      taskId: 1744836532410,
       status: "pending", //pending (when not started), ongoing (when started || resumed), paused (when started but paused), completed (when task is finished)
       timeAssigned: 100000, //total time asssigned in ms
       timeRemaining: 100000, //time remaining (timeAssigned - timeDedicated)
     },
     {
-      taskName: "test_task_2",
-      taskId: "test2",
-      status: "pending", //pending, ongoing, paused
-      timeAssigned: 1000, //total time asssigned in ms
-      timeRemaining: 1000, //time remaining (timeAssigned - timeDedicated)
+      taskName: "I am another test task",
+      taskId: 1744836542689,
+      status: "pending", 
+      timeAssigned: 500000, 
+      timeRemaining: 500000, 
     },
   ],
+  statistics: {
+    timeDedicated: null, //net time spent on tasks
+    timeOverspent: null, //extra time spent on tasks (actual-target)
+    timeSaved: null, //time saved on tasks (target-actual)
+    tasksCompleted: null, //total number of tasks that was completed
+  },
+  lastSeen: null
 };
 
 const taskSlice = createSlice({
@@ -27,9 +34,9 @@ const taskSlice = createSlice({
       const newTask = {
         taskName: null,
         taskId: null,
-        status: "pending", //pending, ongoing, paused
-        timeAssigned: null, //total time asssigned in ms
-        timeRemaining: null, //time remaining (timeAssigned - timeDedicated)
+        status: "pending", 
+        timeAssigned: null, 
+        timeRemaining: null, 
       };
 
       state.tasks = [{ ...newTask, ...action.payload }, ...state.tasks];
@@ -60,6 +67,9 @@ const taskSlice = createSlice({
         } else return task;
       });
     },
+    updateLastSeen: (state, action) => {
+      state.lastSeen = action.payload //hopefully Date.now()
+    }
   },
 });
 

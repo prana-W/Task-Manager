@@ -35,5 +35,10 @@
 - Make a intervalReference as a global variable (using let keyword)
 - clearInterval (intervalReference) on start of the seperate useEffect
 - Then start a setInterval and add a reference to the intervalReference. Inside setInterval, we add function and set an interval of x ms.
-- In the function, we simmple call a reducer, reduceTime, which maps the entire array of tasks, finds task which has status = 'ongoing' and then reduce that task's timeRemaining by x ms.
+- In the function, we simmple call a reducer, reduceTime, which maps the entire array of tasks, finds task which has status = 'ongoing' and then reduce that task's timeRemaining by required time frame.
 - Doing this causes the entire UI everywhere to update the remaining time.
+
+### To-Change
+
+- time period in setInterval in App.jsx and taskSlice.js
+- time perios in setInterrval in App.jsx for local storage

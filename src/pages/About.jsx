@@ -5,12 +5,10 @@ function About() {
   return (
     <main className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6">
       <div className="max-w-3xl mx-auto space-y-10">
-        {/* Header */}
+
         <h1 className="text-3xl font-bold text-center text-primary-600 dark:text-primary-400">
           About This Project
         </h1>
-
-        {/* About You */}
         <section className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
           <h2 className="text-xl font-semibold mb-2">👋 About Me</h2>
           <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
@@ -22,12 +20,11 @@ function About() {
           </p>
         </section>
 
-        {/* Social Links */}
         <section className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
           <h2 className="text-xl font-semibold mb-2">🌐 Connect with Me</h2>
           <div className="flex gap-6 mt-3 text-2xl">
             <a
-              href="https://linkedin.com/in/your-profile"
+              href="https://linkedin.com/in/pranaw-kumar-710331215"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -43,7 +40,7 @@ function About() {
               <FaGithub />
             </a>
             <a
-              href="https://yourportfolio.com"
+              href=""
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -52,8 +49,6 @@ function About() {
             </a>
           </div>
         </section>
-
-        {/* About the Project */}
         <section className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm">
           <h2 className="text-xl font-semibold mb-2">🧠 Project Details</h2>
           <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">

@@ -8,6 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { reduceTime } from "./features/tasks/taskSlice";
 
 function App() {
+
+  //todo: 
+  //1. Add everything from store and Context API to local-storage
+  //2. Retrieve evrything from localStorage to store and Context API when loaded/rendered first time
+  //3. Make a last_seen value in the store, that will keep track of the last time the data was updated, subtract the stored time and current time (at loading/first-time rendering) and see the Math.floor of the value. If greater than 1, then subtract it from the timeRemaining of every task whose status was ongoing
+
   const [themeMode, setThemeMode] = useState("light");
   const dispatch = useDispatch();
 
