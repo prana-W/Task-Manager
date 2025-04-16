@@ -5,35 +5,38 @@ import { editTodo } from "../features/tasks/taskSlice";
 import useTaskInfo from "../hooks/useTaskInfo";
 
 function TaskDashboard() {
-  const [isEdit, setIsEdit] = useState(false);
+  const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
+
+  const [isEdit, setIsEdit] = useState(false); //State of button (false -> not editable)
+
   const navigate = useNavigate();
-  const { taskId } = useParams();
+  const taskId = useParams();
   const taskRef = useRef(null);
   const dispatch = useDispatch();
 
-  const taskData = useTaskInfo(taskId);
+  //it returns the required task object
+  const taskData = useTaskInfo(taskId.taskId);
 
-  const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
+  useEffect(() => {
+    taskRef.current.value = taskData.taskName;
+  }, []);
 
+  //below is used to calculate the height of the rectangle dependening on the remaining time as compared to intial time
   useEffect(() => {
     const ratio = taskData.timeRemaining / taskData.timeAssigned;
     setRectHeight(ratio * 100);
   }, [taskData.timeRemaining]);
 
-  useEffect(() => {
-    if (taskRef.current && taskData) {
-      taskRef.current.value = taskData.taskName;
-    }
-  }, [taskData]);
-
   const handleBtnLogic = () => {
     if (isEdit) {
       taskRef.current.readOnly = true;
       setIsEdit(false);
-      dispatch(editTodo({ taskId: taskId, taskName: taskRef.current.value }));
+
+      dispatch(
+        editTodo({ taskId: taskId.taskId, taskName: taskRef.current.value })
+      );
     } else {
       taskRef.current.removeAttribute("readOnly");
-      taskRef.current.focus();
       setIsEdit(true);
     }
   };
