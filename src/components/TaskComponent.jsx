@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import TaskFunction from "./TaskFunction";
 
 function TaskComponent({ children, taskId }) {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ function TaskComponent({ children, taskId }) {
       <span className="ml-4 text-xs text-gray-500 dark:text-gray-400">
         ⏳ {taskData[0].timeRemaining} hrs left
       </span>
+     <TaskFunction taskId={taskId}/>
     </div>
   );
 }

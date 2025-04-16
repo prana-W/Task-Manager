@@ -5,7 +5,9 @@ const initialState = {
     {
       taskName: "test_task",
       taskId: "test",
-      status: "pending", //pending, ongoing, paused
+      
+      status: "pending", //pending (when not started), ongoing (when started || resumed), paused (when started but paused), completed (when task is finished)
+
       timeAssigned: 10000, //total time asssigned in ms
       timeRemaining: 10000, //time remaining (timeAssigned - timeDedicated)
     },
