@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { editTodo } from "../features/tasks/taskSlice";
+import { editTodo, deleteTodo } from "../features/tasks/taskSlice";
 import useTaskInfo from "../hooks/useTaskInfo";
+import { FaTrash } from "react-icons/fa";
+
 
 function TaskDashboard() {
   const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
@@ -17,6 +19,11 @@ function TaskDashboard() {
   //it returns the required task object
   const taskData = useTaskInfo(taskId.taskId);
 
+  const handleAbort = () => {
+    dispatch(deleteTodo(taskData.taskId))
+    navigate('/')
+  }
+
   useEffect(() => {
     taskRef.current.value = taskData.taskName;
   }, [taskData.taskName]);
@@ -28,28 +35,6 @@ function TaskDashboard() {
 
     //todo: Add message when timer hits 0
 
-    // if (taskData.timeRemaining <= 0) {
-    //   toast.custom((t) => (
-    //     <div
-    //       className={`${
-    //         t.visible ? "animate-enter" : "animate-leave"
-    //       } max-w-xs w-full bg-yellow-300 dark:bg-yellow-500 text-black shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-    //     >
-    //       <div className="flex-1 w-0 p-4">
-    //         <p className="text-sm font-medium">⚠️ Time limit reached</p>
-    //         <p className="mt-1 text-sm">{taskData.taskName} task has run out of time.</p>
-    //       </div>
-    //       <div className="flex border-l border-black/10 dark:border-white/20">
-    //         <button
-    //           onClick={() => toast.dismiss(t.id)}
-    //           className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-black dark:text-black hover:bg-yellow-400 dark:hover:bg-yellow-400 focus:outline-none"
-    //         >
-    //           Close
-    //         </button>
-    //       </div>
-    //     </div>
-    //   ));
-    // }
   }, [taskData.timeRemaining]);
 
   const handleBtnLogic = () => {
@@ -132,6 +117,21 @@ function TaskDashboard() {
           >
             ← Go Back
           </button>
+          {""}
+          <button
+  onClick={handleAbort}
+  className="p-2 rounded-lg
+             bg-red-600 text-white hover:bg-red-700
+             dark:bg-red-500 dark:text-gray-900 dark:hover:bg-red-400
+             transition-colors duration-300 shadow-sm hover:shadow-md
+             focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+             dark:focus:ring-red-400 m-4"
+  aria-label="Delete Task"
+>
+  <FaTrash className="w-4 h-4" />
+</button>
+
+
         </div>
         <div className="flex flex-col items-center justify-center p-6 space-y-3">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">

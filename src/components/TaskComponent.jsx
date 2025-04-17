@@ -1,22 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TaskFunction from "./TaskFunction";
 import useTaskInfo from "../hooks/useTaskInfo";
 import { toast } from "react-hot-toast";
-import { deleteTodo } from "../features/tasks/taskSlice";
+import { deleteTodo, addTodo } from "../features/tasks/taskSlice";
 import { useDispatch } from "react-redux";
 
+
 function TaskComponent({ children, taskId }) {
+
+
+
+  const [failed, setFailed] = useState(false);
   const navigate = useNavigate();
   const taskData = useTaskInfo(taskId);
   const isCompleted = taskData.status === "completed";
+  const dispatch = useDispatch();
+
+  const handleRestartTask = () => {
+    dispatch(addTodo({taskId: Date.now(), taskName: taskData.taskName, timeAssigned: taskData.timeAssigned, timeRemaining: taskData.timeAssigned}));
+    dispatch(deleteTodo(taskData.taskId));
+  };
+
+  const abortTask = () => {
+    dispatch(deleteTodo(taskData.taskId));
+  };
+
   const openTaskManager = () => {
     if (!isCompleted) navigate(`/task/${taskId}`);
   };
 
-  const dispatch = useDispatch();
-
-  //When user marks a task as complete (alert him and remove the task in 5 seconds)
   useEffect(() => {
     if (isCompleted) {
       toast.custom((t) => (
@@ -29,51 +42,86 @@ function TaskComponent({ children, taskId }) {
             <p className="text-sm font-medium">
               ⚠️ {taskData.taskName} was marked as completed!
             </p>
-            <p className="mt-1 text-sm">
-              Task will be removed removed in 5 seconds...
-            </p>
+            <p className="mt-1 text-sm">Task will be removed in 5 seconds...</p>
           </div>
         </div>
       ));
-       var timeoutRef = setTimeout(() => {
+      const timeoutRef = setTimeout(() => {
         dispatch(deleteTodo(taskId));
       }, 5000);
+
+      return () => clearTimeout(timeoutRef);
     }
 
-    return () => clearTimeout(timeoutRef);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCompleted]);
+    if (taskData.status === "failed") {
+      setFailed(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCompleted, taskData.status]);
 
-  return (
-    <div
-      className={`bg-white dark:bg-gray-800 rounded-xl px-4 py-3 shadow-md border border-gray-200 dark:border-gray-700 transition-all 
-      flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm 
-      ${
-        isCompleted
-          ? "opacity-60 line-through cursor-not-allowed"
-          : "text-gray-800 dark:text-gray-200"
-      }`}
-    >
-      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full sm:w-auto justify-between flex-1">
-        <button
-          onClick={openTaskManager}
-          disabled={isCompleted}
-          className={`px-3 py-1 min-w-[90px] text-center rounded-md transition-colors duration-200 text-sm font-medium
+  if (!failed) {
+    return (
+      <div
+        className={`bg-white dark:bg-gray-900 rounded-xl px-5 py-4 shadow-md border border-gray-200 dark:border-gray-700 transition-all
+        flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm
+        ${
+          isCompleted
+            ? "opacity-60 line-through cursor-not-allowed"
+            : "text-gray-800 dark:text-gray-100"
+        }`}
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 flex-1 justify-between w-full">
+          <button
+            onClick={openTaskManager}
+            disabled={isCompleted}
+            className={`px-4 py-2 min-w-[100px] text-center rounded-lg font-medium text-sm transition-all duration-200
             ${
               isCompleted
-                ? "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
-                : "bg-blue-100 dark:bg-blue-700 text-blue-800 dark:text-white hover:bg-blue-200 dark:hover:bg-blue-600"
+                ? "bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-500"
+                : "bg-violet-100 text-violet-800 hover:bg-violet-200"
             }`}
-        >
-          {children}
-        </button>
-        <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-          ⏳ {taskData.timeRemaining} mins left
-        </span>
+          >
+            {children}
+          </button>
+          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+            ⏳ {taskData.timeRemaining} mins left
+          </span>
+        </div>
+        <TaskFunction taskId={taskId} />
       </div>
-      <TaskFunction taskId={taskId} />
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div
+        className="bg-white dark:bg-gray-900 rounded-xl px-5 py-4 shadow-md border border-gray-200 dark:border-gray-700 transition-all
+        flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm text-gray-800 dark:text-gray-100"
+      >
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 flex-1 justify-between w-full">
+      
+          <p className="px-4 py-2 min-w-[100px] text-center bg-red-300 dark:bg-gray-700 rounded-md font-medium">
+            {children}
+          </p>
+          <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+            ⚠️ Time Limit exceeded!
+          </span>
+        </div>
+        <div className="flex items-center gap-2 mt-2 sm:mt-0">
+          <button
+            onClick={handleRestartTask}
+            className="px-4 py-2 text-sm rounded-lg font-medium bg-violet-600 text-white hover:bg-violet-700 dark:bg-violet-400 dark:hover:bg-violet-300 dark:text-gray-900 transition-all"
+          >
+            Restart
+          </button>
+          <button
+            onClick={abortTask}
+            className="px-4 py-2 text-sm rounded-lg font-medium bg-red-500 text-white hover:bg-red-600 dark:bg-red-400 dark:hover:bg-red-300 dark:text-gray-900 transition-all"
+          >
+            Abort
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default TaskComponent;

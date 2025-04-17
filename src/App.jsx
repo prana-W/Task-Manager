@@ -38,10 +38,11 @@ function App() {
 
   //! (warning) change here
   //This is to update the timeRemaining in all ongoing tasks
+
   useEffect(() => {
     var intervalReference = setInterval(() => {
       dispatch(reduceTime());
-    }, 1000); //add the same time interval as in the timeSlice method
+    }, 60000); //add the same time interval as in the timeSlice method
 
     return () => clearInterval(intervalReference);
     // eslint-disable-next-line react-hooks/exhaustive-deps

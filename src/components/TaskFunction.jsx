@@ -32,6 +32,7 @@ function TaskFunction({ taskId }) {
       dispatch(editStatus({ taskId, status: "paused" }));
     }
   };
+
   const handleStatusChange = () => {
     if (isComplete) return;
     if (btnTxt === "Start") {
@@ -50,7 +51,7 @@ function TaskFunction({ taskId }) {
   };
 
   const getBtnColor = () => {
-    if (btnTxt === "Start") return "bg-blue-500 hover:bg-blue-600";
+    if (btnTxt === "Start") return "bg-violet-600 hover:bg-violet-700";
     if (btnTxt === "Pause")
       return "bg-yellow-400 hover:bg-yellow-500 text-gray-900";
     if (btnTxt === "Resume") return "bg-green-500 hover:bg-green-600";
@@ -62,19 +63,19 @@ function TaskFunction({ taskId }) {
       {btnTxt && (
         <button
           onClick={handleStatusChange}
-          className={`px-3 py-1 text-white rounded transition-all duration-200 ${getBtnColor()}`}
+          className={`px-4 py-1.5 text-white rounded-lg font-medium transition-all duration-200 ${getBtnColor()}`}
         >
           {btnTxt}
         </button>
       )}
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         <input
           id={taskId}
           type="checkbox"
           checked={isComplete}
           onChange={handleComplete}
-          className="accent-green-500 w-4 h-4"
+          className="accent-violet-500 w-4 h-4 transition-all duration-200"
         />
         <label
           htmlFor={taskId}

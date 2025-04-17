@@ -17,7 +17,6 @@ const initialState = {
       timeRemaining: 500000,
     },
   ],
-
   //this is the statistics of the user (will be implemented in the future)
   statistics: {
     timeDedicated: null, //net time spent on tasks
@@ -36,11 +35,11 @@ const taskSlice = createSlice({
     //add a new task
     addTodo: (state, action) => {
       const newTask = {
-        taskName: null,
-        taskId: null,
+        taskName: "",
+        taskId: "",
         status: "pending",
-        timeAssigned: null,
-        timeRemaining: null,
+        timeAssigned: "",
+        timeRemaining: "",
       };
       state.tasks = [{ ...newTask, ...action.payload }, ...state.tasks];
     },
@@ -66,19 +65,15 @@ const taskSlice = createSlice({
           : task
       );
     },
-
     //updates the time in the ongoing tasks when user is online
-    reduceTime: (state, action) => {
+    reduceTime: (state) => {
       state.tasks = state.tasks.map((task) => {
         if (task.status == "ongoing") {
-          let newTimeRemaining = task.timeRemaining - 1000; //! (warning) change time here
-
-          //todo: handle when time hits 0
+          let newTimeRemaining = task.timeRemaining - 1; //! (warning) change time here
 
           if (newTimeRemaining <= 0) {
-            newTimeRemaining = 0;
-          }
-          return { ...task, timeRemaining: newTimeRemaining };
+            return { ...task, status: "failed", timeRemaining: 0 };
+          } else return { ...task, timeRemaining: newTimeRemaining };
         } else return task;
       });
     },
@@ -91,9 +86,8 @@ const taskSlice = createSlice({
 
           if (newTimeRemaining <= 0) {
             newTimeRemaining = 0;
-          }
-
-          return { ...task, timeRemaining: newTimeRemaining };
+            return { ...task, status: "failed", timeRemaining: 0 };
+          } else return { ...task, timeRemaining: newTimeRemaining };
         } else return task;
       });
     },
