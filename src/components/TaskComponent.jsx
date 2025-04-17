@@ -6,11 +6,7 @@ import { toast } from "react-hot-toast";
 import { deleteTodo, addTodo } from "../features/tasks/taskSlice";
 import { useDispatch } from "react-redux";
 
-
 function TaskComponent({ children, taskId }) {
-
-
-
   const [failed, setFailed] = useState(false);
   const navigate = useNavigate();
   const taskData = useTaskInfo(taskId);
@@ -18,8 +14,16 @@ function TaskComponent({ children, taskId }) {
   const dispatch = useDispatch();
 
   const handleRestartTask = () => {
-    dispatch(addTodo({taskId: Date.now(), taskName: taskData.taskName, timeAssigned: taskData.timeAssigned, timeRemaining: taskData.timeAssigned}));
+    dispatch(
+      addTodo({
+        taskId: Date.now(),
+        taskName: taskData.taskName,
+        timeAssigned: taskData.timeAssigned,
+        timeRemaining: taskData.timeAssigned,
+      })
+    );
     dispatch(deleteTodo(taskData.taskId));
+    toast.success(`${taskId.taskName} was added again!`);
   };
 
   const abortTask = () => {
@@ -32,20 +36,6 @@ function TaskComponent({ children, taskId }) {
 
   useEffect(() => {
     if (isCompleted) {
-      toast.custom((t) => (
-        <div
-          className={`${
-            t.visible ? "animate-enter" : "animate-leave"
-          } max-w-xs w-full bg-yellow-300 dark:bg-yellow-500 text-black shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-        >
-          <div className="flex-1 w-0 p-2">
-            <p className="text-sm font-medium">
-              ⚠️ {taskData.taskName} was marked as completed!
-            </p>
-            <p className="mt-1 text-sm">Task will be removed in 5 seconds...</p>
-          </div>
-        </div>
-      ));
       const timeoutRef = setTimeout(() => {
         dispatch(deleteTodo(taskId));
       }, 5000);

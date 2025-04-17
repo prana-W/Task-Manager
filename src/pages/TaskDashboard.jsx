@@ -5,7 +5,6 @@ import { editTodo, deleteTodo } from "../features/tasks/taskSlice";
 import useTaskInfo from "../hooks/useTaskInfo";
 import { FaTrash } from "react-icons/fa";
 
-
 function TaskDashboard() {
   const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
 
@@ -20,9 +19,9 @@ function TaskDashboard() {
   const taskData = useTaskInfo(taskId.taskId);
 
   const handleAbort = () => {
-    dispatch(deleteTodo(taskData.taskId))
-    navigate('/')
-  }
+    dispatch(deleteTodo(taskData.taskId));
+    navigate("/");
+  };
 
   useEffect(() => {
     taskRef.current.value = taskData.taskName;
@@ -33,8 +32,7 @@ function TaskDashboard() {
     const ratio = taskData.timeRemaining / taskData.timeAssigned;
     setRectHeight(ratio * 100);
 
-    //todo: Add message when timer hits 0
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskData.timeRemaining]);
 
   const handleBtnLogic = () => {
@@ -119,19 +117,17 @@ function TaskDashboard() {
           </button>
           {""}
           <button
-  onClick={handleAbort}
-  className="p-2 rounded-lg
+            onClick={handleAbort}
+            className="p-2 rounded-lg
              bg-red-600 text-white hover:bg-red-700
              dark:bg-red-500 dark:text-gray-900 dark:hover:bg-red-400
              transition-colors duration-300 shadow-sm hover:shadow-md
              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
              dark:focus:ring-red-400 m-4"
-  aria-label="Delete Task"
->
-  <FaTrash className="w-4 h-4" />
-</button>
-
-
+            aria-label="Delete Task"
+          >
+            <FaTrash className="w-4 h-4" />
+          </button>
         </div>
         <div className="flex flex-col items-center justify-center p-6 space-y-3">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
@@ -156,8 +152,8 @@ function TaskDashboard() {
             >
               <rect
                 width="100%"
-                height={rectHeight*1.5}
-                y={(100 - rectHeight)*1.5}
+                height={rectHeight * 1.5}
+                y={(100 - rectHeight) * 1.5}
                 className="fill-green-600 dark:fill-pink-500 transition-all duration-500 ease-in-out"
               />
             </svg>

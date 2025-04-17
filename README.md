@@ -1,55 +1,21 @@
-### High Priority
+### Task Manager (Features)
 
-
-- When timer hits zero, automatically, alert user and make give the user timer hit zero, make sure to complete it! (when onclicked remove, delte the todo)
-
-- Persist theme as well (use reducer)
-
-- improve toasts
-
-- imporve actual time
-
-
-### Task Manager
-
-- Add tasks
+- Add tasks with time limit
+- Start, pause and resume tasks
 - Complete tasks
 - Edit Tasks
-- Start Task (starts the timer)
-- Pause Task (pause any ongoing task)
-- Set Deadlines (shows time remaining to do the task)
-- Add Theme Toggle
+- See details about a paricular task in dashboard
+- Change theme
+- All functionality even works when the user leaves the website and comes back.
+- See timeRemaining visually in the task dashboard
+- See valuable insights/stats (to be added in future)
 
-### Todo
+### Tech used
 
-- Stats Page (show total tasks completed, time dedicated, excess time spent, time saved)
+- React JS
+- React Router
+- React-Redux using Redux-Toolkit (RTK)
 
-- Implement delete task functionality to the task dashboard
-- Add filter for tasks (latest to oldest, oldest to latest)
-- Implement local storage for theme
-- Implement local storage for storing tasks
-- Implement start/pause/complete functionality to the tasks
+### Highest Priority
 
-- Add a session page and only include tips 2-3 times on first time session
-
-### Documnetations
-
-- In home page, user can add tasks firstly and then set the number of hours needed to complete the task.
-
-- After adding both, a task is successfully created and added on the page (with latest to oldest)
-
-## Important Logic
-
-### Reducing time when the task is active (ongoing)
-
-- Add a seperate useEffect in App.jsx (Don't add any dependancies in here)
-
-- Make a intervalReference as a global variable (using let keyword)
-- clearInterval (intervalReference) on start of the seperate useEffect
-- Then start a setInterval and add a reference to the intervalReference. Inside setInterval, we add function and set an interval of x ms.
-- In the function, we simmple call a reducer, reduceTime, which maps the entire array of tasks, finds task which has status = 'ongoing' and then reduce that task's timeRemaining by required time frame.
-- Doing this causes the entire UI everywhere to update the remaining time.
-
-### To-Change
-
-- search for (warning) and change those areas
+- Not working in phone

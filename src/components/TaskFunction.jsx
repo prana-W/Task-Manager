@@ -44,7 +44,6 @@ function TaskFunction({ taskId }) {
       toast.success(`${taskData.taskName} task was paused!`);
       dispatch(editStatus({ taskId, status: "paused" }));
     } else if (btnTxt === "Resume") {
-      toast.success(`${taskData.taskName} was resumed!`);
       setBtnTxt("Pause");
       dispatch(editStatus({ taskId, status: "ongoing" }));
     }

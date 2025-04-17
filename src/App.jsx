@@ -24,18 +24,14 @@ function App() {
     if (timeDiff) {
       dispatch(updateOfflineTime(timeDiff));
     }
+
+    const themeFromStorage = localStorage.getItem('theme')
+
+    themeFromStorage && setThemeMode (themeFromStorage)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Updates the lastSeen time on every refresh or reload or load
-
-  // useEffect(() => {
-  //   window.addEventListener("beforeunload", () => {
-  //     dispatch(updateLastSeen(Date.now()));
-  //   });
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   useEffect(() => {
     var lastSeenUpdateRef = setInterval(() => {
@@ -46,7 +42,6 @@ function App() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //! (warning) change here
   //This is to update the timeRemaining in all ongoing tasks
 
   useEffect(() => {
@@ -66,10 +61,12 @@ function App() {
 
   const toLightTheme = () => {
     setThemeMode("light");
+    localStorage.setItem('theme', 'light')
   };
 
   const toDarkTheme = () => {
     setThemeMode("dark");
+    localStorage.setItem('theme', 'dark')
   };
 
   return (

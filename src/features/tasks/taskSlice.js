@@ -3,29 +3,31 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   tasks: [
     {
-      taskName: "Double click to open task dashboard",
+      taskName: "Click any task to open the dashboard",
       taskId: 1744836532410,
       status: "pending", //pending (when not started), ongoing (when started || resumed), paused (when started but paused), completed (when task is finished)
-      timeAssigned: 1000, //total time asssigned in ms
-      timeRemaining: 1000, //time remaining (timeAssigned - timeDedicated)
+      timeAssigned: 10000, //total time asssigned in ms
+      timeRemaining: 10000, //time remaining (timeAssigned - timeDedicated)
     },
     {
-      taskName: "Hello World!",
+      taskName: "Completed task are auto deleted in 5 seconds",
       taskId: 1744836542689,
       status: "pending",
-      timeAssigned: 500000,
-      timeRemaining: 500000,
+      timeAssigned: 50000,
+      timeRemaining: 50000,
     },
   ],
+
+  lastSeen: null, //If user is online -> this is the current time; if user is offline -> this is the time the user was last seen
+
   //this is the statistics of the user (will be implemented in the future)
-  statistics: {
-    timeDedicated: null, //net time spent on tasks
-    timeOverspent: null, //extra time spent on tasks (actual-target)
-    timeSaved: null, //time saved on tasks (target-actual)
-    tasksCompleted: null, //total number of tasks that was completed
-  },
-  //If user is online -> this is the current time; if user is offline -> this is the time the user was last seen
-  lastSeen: null,
+
+  // statistics: {
+  //   timeDedicated: null, //net time spent on tasks
+  //   timeOverspent: null, //extra time spent on tasks (actual-target)
+  //   timeSaved: null, //time saved on tasks (target-actual)
+  //   tasksCompleted: null, //total number of tasks that was completed
+  // },
 };
 
 const taskSlice = createSlice({
@@ -69,8 +71,7 @@ const taskSlice = createSlice({
     reduceTime: (state) => {
       state.tasks = state.tasks.map((task) => {
         if (task.status == "ongoing") {
-          let newTimeRemaining = Number((task.timeRemaining - 0.01).toFixed(2)); //! (warning) change time here
-
+          let newTimeRemaining = Number((task.timeRemaining - 0.01).toFixed(2));
           if (newTimeRemaining <= 0) {
             return { ...task, status: "failed", timeRemaining: 0 };
           } else return { ...task, timeRemaining: newTimeRemaining };
