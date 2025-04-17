@@ -69,7 +69,7 @@ const taskSlice = createSlice({
     reduceTime: (state) => {
       state.tasks = state.tasks.map((task) => {
         if (task.status == "ongoing") {
-          let newTimeRemaining = task.timeRemaining - 1; //! (warning) change time here
+          let newTimeRemaining = Number((task.timeRemaining - 0.01).toFixed(2)); //! (warning) change time here
 
           if (newTimeRemaining <= 0) {
             return { ...task, status: "failed", timeRemaining: 0 };
@@ -82,7 +82,7 @@ const taskSlice = createSlice({
     updateOfflineTime: (state, action) => {
       state.tasks = state.tasks.map((task) => {
         if (task.status == "ongoing") {
-          let newTimeRemaining = task.timeRemaining - action.payload;
+          let newTimeRemaining = Number(task.timeRemaining - action.payload);
 
           if (newTimeRemaining <= 0) {
             newTimeRemaining = 0;

@@ -19,7 +19,7 @@ function App() {
 
   //This dispatches a action (which updates the time of ongoing task), it reduces the amount of time the user was inactive (offline)
   useEffect(() => {
-    const timeDiff = Math.floor(Date.now() - lastSeenTime);
+    const timeDiff = ((Date.now() - lastSeenTime)/60000).toFixed(2);
 
     if (timeDiff) {
       dispatch(updateOfflineTime(timeDiff));
@@ -42,7 +42,7 @@ function App() {
   useEffect(() => {
     var intervalReference = setInterval(() => {
       dispatch(reduceTime());
-    }, 60000); //add the same time interval as in the timeSlice method
+    }, 600); //add the same time interval as in the timeSlice method
 
     return () => clearInterval(intervalReference);
     // eslint-disable-next-line react-hooks/exhaustive-deps
