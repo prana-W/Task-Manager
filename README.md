@@ -18,8 +18,6 @@
 
 - Add last_seen
 
-
-
 ### Task Manager
 
 - Add tasks
@@ -63,4 +61,3 @@
 ### To-Change
 
 - search for (warning) and change those areas
-
