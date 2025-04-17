@@ -29,19 +29,8 @@ function Home() {
       })
     );
 
-    // toast.success ('Task was added successfully!')
-    toast.custom((t) => (
-      <div
-        className={`${
-          t.visible ? "animate-enter" : "animate-leave"
-        } max-w-sm w-full bg-neutral-900 border border-orange-500 text-white px-4 py-3 rounded-2xl shadow-lg flex items-start gap-3`}
-      >
-        <div className="text-orange-400 text-xl">💡</div>
-        <div className="text-sm leading-snug">
-          You can <b>double tap or double click</b> on any task to open the task dashboard.
-        </div>
-      </div>
-    ));
+    toast.success (`${taskName} was added successfully!`)
+  
     taskRef.current.value = "";
     setBtnTxt("Add");
     setInputTxt("Enter your task...");

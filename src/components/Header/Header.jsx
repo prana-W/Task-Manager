@@ -75,7 +75,7 @@ function Header() {
         </div>
       </div>
       {menuOpen && (
-        <div className="md:hidden flex flex-col gap-4 mt-4 px-4 pb-4 text-sm font-medium bg-white dark:bg-gray-900 shadow-inner rounded-md">
+        <div className="md:hidden flex flex-col gap-4 mt-4 px-4 py-3 pb-4 text-sm font-medium bg-white dark:bg-gray-900 shadow-inner rounded-md">
           <NavLink
             to="/"
             className={({ isActive }) => getNavLinkClass(isActive)}

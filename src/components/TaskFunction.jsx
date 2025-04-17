@@ -36,14 +36,14 @@ function TaskFunction({ taskId }) {
     if (isComplete) return;
     if (btnTxt === "Start") {
       setBtnTxt("Pause");
-      toast.success("Task has been marked as started!");
+      toast.success(`${taskData.taskName} task was started!`);
       dispatch(editStatus({ taskId, status: "ongoing" }));
     } else if (btnTxt === "Pause") {
       setBtnTxt("Resume");
-      toast.success("Task was paused!");
+      toast.success(`${taskData.taskName} task was paused!`);
       dispatch(editStatus({ taskId, status: "paused" }));
     } else if (btnTxt === "Resume") {
-      toast.success("Task was resumed!");
+      toast.success(`${taskData.taskName} was resumed!`);
       setBtnTxt("Pause");
       dispatch(editStatus({ taskId, status: "ongoing" }));
     }

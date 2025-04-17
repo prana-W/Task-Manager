@@ -18,8 +18,7 @@ function TaskComponent({ children, taskId }) {
 
   let timeoutRef;
 
-  //todo: add message when todo time hits 0
-
+  //When user marks a task as complete (alert him and remove the task in 5 seconds)
   useEffect(() => {
     if (isCompleted) {
       toast.custom((t) => (
@@ -28,17 +27,13 @@ function TaskComponent({ children, taskId }) {
             t.visible ? "animate-enter" : "animate-leave"
           } max-w-xs w-full bg-yellow-300 dark:bg-yellow-500 text-black shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
         >
-          <div className="flex-1 w-0 p-4">
-            <p className="text-sm font-medium">⚠️ {taskData.taskName} was marked as completed!</p>
-            <p className="mt-1 text-sm">Task will be automatically removed in 5 seconds...</p>
-          </div>
-          <div className="flex border-l border-black/10 dark:border-white/20">
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-black dark:text-black hover:bg-yellow-400 dark:hover:bg-yellow-400 focus:outline-none"
-            >
-              Close
-            </button>
+          <div className="flex-1 w-0 p-2">
+            <p className="text-sm font-medium">
+              ⚠️ {taskData.taskName} was marked as completed!
+            </p>
+            <p className="mt-1 text-sm">
+              Task will be removed removed in 5 seconds...
+            </p>
           </div>
         </div>
       ));
@@ -46,7 +41,6 @@ function TaskComponent({ children, taskId }) {
         dispatch(deleteTodo(taskId));
       }, 5000);
     }
-
 
     return () => clearTimeout(timeoutRef);
   }, [isCompleted]);
@@ -63,7 +57,7 @@ function TaskComponent({ children, taskId }) {
     >
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 w-full sm:w-auto justify-between flex-1">
         <button
-          onDoubleClick={openTaskManager}
+          onClick={openTaskManager}
           disabled={isCompleted}
           className={`px-3 py-1 min-w-[90px] text-center rounded-md transition-colors duration-200 text-sm font-medium
             ${
