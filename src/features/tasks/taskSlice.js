@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState = {
   tasks: [
@@ -12,9 +13,9 @@ const initialState = {
     {
       taskName: "I am another test task",
       taskId: 1744836542689,
-      status: "pending", 
-      timeAssigned: 500000, 
-      timeRemaining: 500000, 
+      status: "pending",
+      timeAssigned: 500000,
+      timeRemaining: 500000,
     },
   ],
   statistics: {
@@ -23,7 +24,7 @@ const initialState = {
     timeSaved: null, //time saved on tasks (target-actual)
     tasksCompleted: null, //total number of tasks that was completed
   },
-  lastSeen: null
+  lastSeen: null,
 };
 
 const taskSlice = createSlice({
@@ -34,9 +35,9 @@ const taskSlice = createSlice({
       const newTask = {
         taskName: null,
         taskId: null,
-        status: "pending", 
-        timeAssigned: null, 
-        timeRemaining: null, 
+        status: "pending",
+        timeAssigned: null,
+        timeRemaining: null,
       };
 
       state.tasks = [{ ...newTask, ...action.payload }, ...state.tasks];
@@ -62,14 +63,20 @@ const taskSlice = createSlice({
     reduceTime: (state, action) => {
       state.tasks = state.tasks.map((task) => {
         if (task.status == "ongoing") {
-          const newTimeRemaining = task.timeRemaining - 1000;
+          let newTimeRemaining = task.timeRemaining - 1;
+
+          //todo: handle when time hits 0 
+
+          if (newTimeRemaining === 0) {
+            newTimeRemaining = null;
+          }
           return { ...task, timeRemaining: newTimeRemaining };
         } else return task;
       });
     },
-    updateLastSeen: (state, action) => {
-      state.lastSeen = action.payload //hopefully Date.now()
-    }
+    // updateLastSeen: (state, action) => {
+    //   state.lastSeen = action.payload //hopefully Date.now()
+    // }
   },
 });
 

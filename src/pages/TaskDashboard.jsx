@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { editTodo } from "../features/tasks/taskSlice";
 import useTaskInfo from "../hooks/useTaskInfo";
+import {toast} from 'react-hot-toast'
 
 function TaskDashboard() {
   const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
@@ -25,6 +26,31 @@ function TaskDashboard() {
   useEffect(() => {
     const ratio = taskData.timeRemaining / taskData.timeAssigned;
     setRectHeight(ratio * 100);
+
+    //todo: Add message when timer hits 0
+
+    // if (taskData.timeRemaining <= 0) {
+    //   toast.custom((t) => (
+    //     <div
+    //       className={`${
+    //         t.visible ? "animate-enter" : "animate-leave"
+    //       } max-w-xs w-full bg-yellow-300 dark:bg-yellow-500 text-black shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+    //     >
+    //       <div className="flex-1 w-0 p-4">
+    //         <p className="text-sm font-medium">⚠️ Time limit reached</p>
+    //         <p className="mt-1 text-sm">{taskData.taskName} task has run out of time.</p>
+    //       </div>
+    //       <div className="flex border-l border-black/10 dark:border-white/20">
+    //         <button
+    //           onClick={() => toast.dismiss(t.id)}
+    //           className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-black dark:text-black hover:bg-yellow-400 dark:hover:bg-yellow-400 focus:outline-none"
+    //         >
+    //           Close
+    //         </button>
+    //       </div>
+    //     </div>
+    //   ));
+    // }
   }, [taskData.timeRemaining]);
 
   const handleBtnLogic = () => {

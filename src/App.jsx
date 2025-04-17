@@ -27,7 +27,7 @@ function App() {
 
     clearInterval(intervalReference);
 
-    intervalReference = setInterval(updateTime, 1000); //add the same time interval as in the timeSlice method
+    intervalReference = setInterval(updateTime, 60000); //add the same time interval as in the timeSlice method
   }, []);
 
   useEffect(() => {

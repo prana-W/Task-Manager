@@ -4,8 +4,12 @@ import "./index.css";
 import App from "./App.jsx";
 import { Home, TaskDashboard, About, Stats, ErrorPage } from "./pages";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import store from './app/store.js'
+import store from "./app/store.js";
 import { Provider } from "react-redux";
+
+import { PersistGate } from "redux-persist/integration/react";
+
+import { persistor } from "./app/store.js";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +26,7 @@ const router = createBrowserRouter([
         path: "/task/:taskId",
         element: <TaskDashboard />,
       },
-      
+
       {
         path: "/about",
         element: <About />,
@@ -30,15 +34,15 @@ const router = createBrowserRouter([
       {
         path: "/stats",
         element: <Stats />,
-      }
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <Provider store= {store}>
-    <RouterProvider router={router} />
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
+  </Provider>
 );

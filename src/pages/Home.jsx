@@ -59,7 +59,7 @@ function Home() {
     if (!taskRef.current.value) return;
 
     setBtnTxt("Set");
-    setInputTxt("Add Time limit (in hours)");
+    setInputTxt("Add Time limit (in minutes)");
   };
 
   return (
