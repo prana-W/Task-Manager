@@ -19,7 +19,7 @@ function App() {
 
   //This dispatches a action (which updates the time of ongoing task), it reduces the amount of time the user was inactive (offline)
   useEffect(() => {
-    const timeDiff = ((Date.now() - lastSeenTime)/60000).toFixed(2);
+    const timeDiff = ((Date.now() - lastSeenTime) / 60000).toFixed(2);
 
     if (timeDiff) {
       dispatch(updateOfflineTime(timeDiff));
@@ -28,12 +28,22 @@ function App() {
   }, []);
 
   // Updates the lastSeen time on every refresh or reload or load
-  useEffect(() => {
-    window.addEventListener("beforeunload", () => {
-      dispatch(updateLastSeen(Date.now()));
-    });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", () => {
+  //     dispatch(updateLastSeen(Date.now()));
+  //   });
+
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  useEffect(() => {
+    var lastSeenUpdateRef = setInterval(() => {
+      dispatch(updateLastSeen(Date.now()));
+    }, 100);
+
+    return () => clearInterval(lastSeenUpdateRef);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //! (warning) change here
