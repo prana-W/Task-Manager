@@ -1,15 +1,3 @@
-// import { configureStore } from "@reduxjs/toolkit";
-// import taskSlice from "../features/tasks/taskSlice";
-
-// const store = configureStore({
-//   reducer: {
-//     task: taskSlice,
-//   },
-// });
-
-// export default store;
-
-
 import { configureStore } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -43,5 +31,9 @@ const store = configureStore({
     }),
 });
 
-export default store
+export default store;
 export let persistor = persistStore(store);
+
+// Redux-Persist is used to save every state in the local storage
+// Don't forget to wrap the the component main.jsx by:
+// <PersistGate loading={null} persistor={persistor}> </PersistGate>

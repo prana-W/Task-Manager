@@ -62,5 +62,5 @@
 
 ### To-Change
 
-- time period in setInterval in App.jsx and taskSlice.js
-- time perios in setInterrval in App.jsx for local storage
+- search for (warning) and change those areas
+
