@@ -20,7 +20,7 @@ function TaskFunction({ taskId }) {
       setBtnTxt(null);
       setIsComplete(true);
     }
-  }, []);
+  }, [taskData.status]);
 
   const handleComplete = () => {
     setIsComplete((prev) => !prev);

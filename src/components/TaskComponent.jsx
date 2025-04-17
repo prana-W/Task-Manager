@@ -16,8 +16,6 @@ function TaskComponent({ children, taskId }) {
 
   const dispatch = useDispatch();
 
-  let timeoutRef;
-
   //When user marks a task as complete (alert him and remove the task in 5 seconds)
   useEffect(() => {
     if (isCompleted) {
@@ -37,12 +35,13 @@ function TaskComponent({ children, taskId }) {
           </div>
         </div>
       ));
-      timeoutRef = setTimeout(() => {
+       var timeoutRef = setTimeout(() => {
         dispatch(deleteTodo(taskId));
       }, 5000);
     }
 
     return () => clearTimeout(timeoutRef);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCompleted]);
 
   return (

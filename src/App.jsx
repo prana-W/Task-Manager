@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header, Footer } from "./components";
 import { Outlet } from "react-router-dom";
-import { ThemeContext, ThemeProvider, useTheme } from "./contexts";
+import { ThemeContext, ThemeProvider } from "./contexts";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,6 @@ function App() {
 
   const lastSeenTime = useSelector((state) => state.task.lastSeen);
 
-  let intervalReference; //this is a reference for the setInterval used
-
   //This dispatches a action (which updates the time of ongoing task), it reduces the amount of time the user was inactive (offline)
   useEffect(() => {
     const timeDiff = Math.floor(Date.now() - lastSeenTime);
@@ -26,26 +24,27 @@ function App() {
     if (timeDiff) {
       dispatch(updateOfflineTime(timeDiff));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   // Updates the lastSeen time on every refresh or reload or load
-  useEffect (() => {
+  useEffect(() => {
+    window.addEventListener("beforeunload", () => {
+      dispatch(updateLastSeen(Date.now()));
+    });
 
-    window.addEventListener('beforeunload', () => {
-      dispatch(updateLastSeen(Date.now()))
-    })
-  
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   //! (warning) change here
   //This is to update the timeRemaining in all ongoing tasks
   useEffect(() => {
-    clearInterval(intervalReference);
-
-    intervalReference = setInterval(() => {
+    var intervalReference = setInterval(() => {
       dispatch(reduceTime());
     }, 1000); //add the same time interval as in the timeSlice method
+
+    return () => clearInterval(intervalReference);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //This is used to update the theme

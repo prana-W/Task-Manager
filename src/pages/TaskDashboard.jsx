@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { editTodo } from "../features/tasks/taskSlice";
 import useTaskInfo from "../hooks/useTaskInfo";
-import {toast} from 'react-hot-toast'
 
 function TaskDashboard() {
   const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
@@ -20,7 +19,7 @@ function TaskDashboard() {
 
   useEffect(() => {
     taskRef.current.value = taskData.taskName;
-  }, []);
+  }, [taskData.taskName]);
 
   //below is used to calculate the height of the rectangle dependening on the remaining time as compared to intial time
   useEffect(() => {
@@ -134,20 +133,44 @@ function TaskDashboard() {
             ← Go Back
           </button>
         </div>
-
-        <div className="flex justify-center items-center bg-white dark:bg-gray-900 p-6 rounded-2xl min-h-[300px]">
-          <svg
-            viewBox={`0 0 200 ${rectHeight}`}
-            className="w-full h-full"
-            preserveAspectRatio="xMidYMid meet"
+        <div className="flex flex-col items-center justify-center p-6 space-y-3">
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
+            ⏳ Time Remaining Indicator
+          </h3>
+          <br />
+          <div
+            className="relative bg-green-100 dark:bg-pink-200 shadow-inner"
+            style={{
+              width: "100px",
+              height: "150px",
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "center",
+            }}
           >
-            <rect
-              width="100%"
-              height="100%"
-              fill="currentColor"
-              className="text-green-400 dark:text-pink-500"
-            />
-          </svg>
+            <svg
+              viewBox="0 0 100 150"
+              width="100"
+              height="150"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <rect
+                width="100%"
+                height={rectHeight*1.5}
+                y={(100 - rectHeight)*1.5}
+                className="fill-green-600 dark:fill-pink-500 transition-all duration-500 ease-in-out"
+              />
+            </svg>
+            <div className="absolute top-1 right-2 text-xs text-gray-700 dark:text-gray-900 font-semibold">
+              {Math.max(
+                Math.floor(
+                  (taskData.timeRemaining / taskData.timeAssigned) * 100
+                ),
+                0
+              )}
+              %
+            </div>
+          </div>
         </div>
       </div>
     </div>
