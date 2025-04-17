@@ -67,20 +67,35 @@ const taskSlice = createSlice({
 
           //todo: handle when time hits 0 
 
-          if (newTimeRemaining === 0) {
-            newTimeRemaining = null;
+          if (newTimeRemaining <= 0) {
+            newTimeRemaining = 0;
           }
           return { ...task, timeRemaining: newTimeRemaining };
         } else return task;
       });
+
+      state.lastSeen = action.payload
     },
+    updateOfflineTime: (state, action) => {
+      state.tasks = state.tasks.map ((task) => {
+        if (task.status == "ongoing") {
+          let newTimeRemaining = task.timeRemaining - action.payload
+
+          if (newTimeRemaining <= 0) {
+            newTimeRemaining = 0
+          }
+
+          return {...task, timeRemaining: newTimeRemaining}
+        } else return task
+      })
+    }
     // updateLastSeen: (state, action) => {
     //   state.lastSeen = action.payload //hopefully Date.now()
     // }
   },
 });
 
-export const { editTodo, editStatus, addTodo, deleteTodo, reduceTime } =
+export const { editTodo, editStatus, addTodo, deleteTodo, reduceTime, updateOfflineTime } =
   taskSlice.actions;
 
 export default taskSlice.reducer;

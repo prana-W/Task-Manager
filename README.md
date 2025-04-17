@@ -14,9 +14,9 @@
 
 - Improve rectanguar inndicator
 
+- Implement auth and make all the storage in the db
 
-
-
+- Add last_seen
 
 
 

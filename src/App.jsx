@@ -5,7 +5,7 @@ import { ThemeContext, ThemeProvider, useTheme } from "./contexts";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { reduceTime } from "./features/tasks/taskSlice";
+import { reduceTime, updateOfflineTime } from "./features/tasks/taskSlice";
 
 function App() {
 
@@ -17,11 +17,23 @@ function App() {
   const [themeMode, setThemeMode] = useState("light");
   const dispatch = useDispatch();
 
+  const lastSeenTime = useSelector ((state) => state.task.lastSeen)
+
   let intervalReference;
 
   const updateTime = () => {
-    dispatch(reduceTime());
+    const lastSeen = Date.now()
+    dispatch(reduceTime(lastSeen));
   }
+
+  useEffect (() => {
+    const timeDiff = Math.floor (Date.now() - lastSeenTime)
+
+    if (timeDiff > 0) {
+      dispatch(updateOfflineTime(timeDiff))
+    }
+
+  })
 
   useEffect(() => {
 
