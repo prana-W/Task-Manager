@@ -5,7 +5,9 @@
 
 - Persist theme as well (use reducer)
 
-- Improve rectanguar inndicator
+- improve toasts
+
+- imporve actual time
 
 
 ### Task Manager
