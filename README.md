@@ -1,22 +1,12 @@
 ### High Priority
 
-- On completing task, wait for 20 seconds, then delete it permanently (give notificatin)
 
-- Add a custom task by default, saying clicking on me takes you to dashboard
-
-- When task is completed, notify the user
-
-- Also change last_seen when dipatching reduceTime, and then do when the user logs back on
+- When timer hits zero, automatically, alert user and make give the user timer hit zero, make sure to complete it! (when onclicked remove, delte the todo)
 
 - Persist theme as well (use reducer)
 
-- Improve time period in intervals, to update on each 10 seconds
-
 - Improve rectanguar inndicator
 
-- Implement auth and make all the storage in the db
-
-- Add last_seen
 
 ### Task Manager
 

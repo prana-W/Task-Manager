@@ -67,7 +67,7 @@ function App() {
       <ThemeProvider value={{ themeMode, toLightTheme, toDarkTheme }}>
         <Header />
       </ThemeProvider>
-      <Toaster position="top-left" />
+      <Toaster position="bottom-left" />
       <Outlet />
       <Footer />
       <Analytics />

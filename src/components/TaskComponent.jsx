@@ -2,41 +2,54 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import TaskFunction from "./TaskFunction";
 import useTaskInfo from "../hooks/useTaskInfo";
-import {toast} from 'react-hot-toast'
+import { toast } from "react-hot-toast";
+import { deleteTodo } from "../features/tasks/taskSlice";
+import { useDispatch } from "react-redux";
 
 function TaskComponent({ children, taskId }) {
   const navigate = useNavigate();
   const taskData = useTaskInfo(taskId);
-  const isCompleted = taskData.status === "completed"
+  const isCompleted = taskData.status === "completed";
   const openTaskManager = () => {
     if (!isCompleted) navigate(`/task/${taskId}`);
-  }
+  };
+
+  const dispatch = useDispatch();
+
+  let timeoutRef;
 
   //todo: add message when todo time hits 0
 
-  // useEffect (() => {
-  //   if (taskData.timeRemaining && taskData.timeRemaining == 0)
-  //   toast.custom((t) => (
-  //     <div
-  //       className={`${
-  //         t.visible ? "animate-enter" : "animate-leave"
-  //       } max-w-xs w-full bg-yellow-300 dark:bg-yellow-500 text-black shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-  //     >
-  //       <div className="flex-1 w-0 p-4">
-  //         <p className="text-sm font-medium">⚠️ Time limit reached</p>
-  //         <p className="mt-1 text-sm">The task has run out of time.</p>
-  //       </div>
-  //       <div className="flex border-l border-black/10 dark:border-white/20">
-  //         <button
-  //           onClick={() => toast.dismiss(t.id)}
-  //           className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-black dark:text-black hover:bg-yellow-400 dark:hover:bg-yellow-400 focus:outline-none"
-  //         >
-  //           Close
-  //         </button>
-  //       </div>
-  //     </div>
-  //   ));
-  // }, [taskData.timeRemaining])
+  useEffect(() => {
+    if (isCompleted) {
+      toast.custom((t) => (
+        <div
+          className={`${
+            t.visible ? "animate-enter" : "animate-leave"
+          } max-w-xs w-full bg-yellow-300 dark:bg-yellow-500 text-black shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+        >
+          <div className="flex-1 w-0 p-4">
+            <p className="text-sm font-medium">⚠️ {taskData.taskName} was marked as completed!</p>
+            <p className="mt-1 text-sm">Task will be automatically removed in 5 seconds...</p>
+          </div>
+          <div className="flex border-l border-black/10 dark:border-white/20">
+            <button
+              onClick={() => toast.dismiss(t.id)}
+              className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-black dark:text-black hover:bg-yellow-400 dark:hover:bg-yellow-400 focus:outline-none"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ));
+      timeoutRef = setTimeout(() => {
+        dispatch(deleteTodo(taskId));
+      }, 5000);
+    }
+
+
+    return () => clearTimeout(timeoutRef);
+  }, [isCompleted]);
 
   return (
     <div
@@ -67,7 +80,7 @@ function TaskComponent({ children, taskId }) {
       </div>
       <TaskFunction taskId={taskId} />
     </div>
-  )
+  );
 }
 
 export default TaskComponent;
