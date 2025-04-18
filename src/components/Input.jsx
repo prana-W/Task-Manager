@@ -1,6 +1,6 @@
 import React from "react";
 
-function Input({type = "text",  label, placeholder, ref, ...props}) {
+function Input({ type = "text", label, placeholder, ref, ...props }) {
   return (
     <div className="flex flex-col gap-1 w-full">
       {label && (
@@ -8,7 +8,7 @@ function Input({type = "text",  label, placeholder, ref, ...props}) {
           {label}
         </label>
       )}
-      
+
       <input
         type={type}
         placeholder={placeholder}
@@ -18,8 +18,7 @@ function Input({type = "text",  label, placeholder, ref, ...props}) {
                    placeholder-gray-400 dark:placeholder-gray-500 
                    focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 
                    transition duration-200"
-
-                   {...props}
+        {...props}
       />
     </div>
   );

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { editTodo, deleteTodo } from "../features/tasks/taskSlice";
 import useTaskInfo from "../hooks/useTaskInfo";
 import { FaTrash } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 function TaskDashboard() {
   const [rectHeight, setRectHeight] = useState(100); //this helps us in changing the height of the rectangle depending on the amount of time we have
@@ -21,6 +22,7 @@ function TaskDashboard() {
   const handleAbort = () => {
     dispatch(deleteTodo(taskData.taskId));
     navigate("/");
+    toast.success(`${taskData.taskName} task was deleted!`);
   };
 
   useEffect(() => {

@@ -20,7 +20,7 @@ const initialState = {
 
   lastSeen: null, //If user is online -> this is the current time; if user is offline -> this is the time the user was last seen
 
-  //this is the statistics of the user (will be implemented in the future)
+  //this is the statistics of the user (will be implemented in the future, hopefully...)
 
   // statistics: {
   //   timeDedicated: null, //net time spent on tasks
@@ -58,7 +58,6 @@ const taskSlice = createSlice({
     deleteTodo: (state, action) => {
       state.tasks = state.tasks.filter((task) => task.taskId != action.payload);
     },
-
     // update the status of a particular task
     editStatus: (state, action) => {
       state.tasks = state.tasks.map((task) =>

@@ -33,7 +33,3 @@ const store = configureStore({
 
 export default store;
 export let persistor = persistStore(store);
-
-// Redux-Persist is used to save every state in the local storage
-// Don't forget to wrap the the component main.jsx by:
-// <PersistGate loading={null} persistor={persistor}> </PersistGate>

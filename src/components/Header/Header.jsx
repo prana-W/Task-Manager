@@ -20,7 +20,7 @@ function Header() {
       isActive
         ? "text-orange-500 dark:text-orange-400 font-semibold"
         : "text-gray-600 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-300"
-    }`;
+    }`
 
   return (
     <header className="w-full px-6 py-4 bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50">
@@ -47,7 +47,6 @@ function Header() {
           >
             About
           </NavLink>
-
           <button
             onClick={toggleTheme}
             className="ml-4 text-xl"
@@ -56,7 +55,6 @@ function Header() {
             {themeMode === "light" ? "🌙" : "☀️"}
           </button>
         </nav>
-
         <div className="md:hidden flex items-center gap-2">
           <button
             onClick={toggleTheme}
@@ -100,7 +98,7 @@ function Header() {
         </div>
       )}
     </header>
-  );
+  )
 }
 
 export default Header;

@@ -1,21 +1,67 @@
-### Task Manager (Features)
+# 🗂️ Toh, Do? — A Minimalist Task Manager
 
-- Add tasks with time limit
-- Start, pause and resume tasks
-- Complete tasks
-- Edit Tasks
-- See details about a paricular task in dashboard
-- Change theme
-- All functionality even works when the user leaves the website and comes back.
-- See timeRemaining visually in the task dashboard
-- See valuable insights/stats (to be added in future)
+**Toh, Do?** is a productivity-focused task manager built with modern web technologies. It allows users to manage their tasks efficiently with smart features like timers, dashboards, and persistent state management — all wrapped in a sleek, theme-adaptive interface.
 
-### Tech used
+---
 
-- React JS
-- React Router
-- React-Redux using Redux-Toolkit (RTK)
+## 🚀 Features
 
-### Highest Priority
+- ✅ **Add Tasks with Time Limits**  
+  Quickly add tasks and specify how much time you want to spend on them.
 
-- Not working in phone
+- ⏱️ **Start, Pause, Resume**  
+  Control your task timers with ease. Work at your pace.
+
+- ✍️ **Edit Tasks Anytime**  
+  Update task details even after creation.
+
+- 🧠 **Task Dashboard**  
+  View detailed information and track progress for each individual task.
+
+- 🌗 **Dark & Light Theme Toggle**  
+  Switch between elegant dark and light modes.
+
+- 💾 **Persistent State**  
+  Your tasks, themes, and timers remain intact even if you leave the site or refresh the page — powered by Redux Persist and localStorage.
+
+- ⏳ **Visual Time Remaining**  
+  Get a clear, visual representation of the remaining time for each task.
+
+- 📊 **Insights & Stats (Coming Soon)**  
+  Analyze your productivity with data on completed tasks, total time spent, and time efficiency.
+
+---
+
+## 🛠️ Tech Stack
+
+- ⚛️ **React JS** — Component-based UI library  
+- 🧭 **React Router** — Routing for multi-page navigation  
+- 📦 **React-Redux (Redux Toolkit)** — Scalable state management  
+- 🔁 **Redux Persist** — Sync Redux state to localStorage  
+- 🎨 **Tailwind CSS** — Utility-first CSS framework for styling  
+- 📱 **Responsive Design** — Fully responsive and mobile-friendly UI
+
+---
+
+## 📸 Screenshots
+
+<img src ="./public/one.png" alt = "light_mode"/>
+<br>
+<br>
+<img src ="./public/two.png" alt = "add_new_task">
+<br>
+<br>
+<img src ="./public/three.png" alt = "task_dashboard"/>
+<br>
+<br>
+<img src ="./public/four.png" alt = "complete_task"/>
+
+---
+<br>
+Feel free to contribute and give me suggestions <a href = "https://www.linkedin.com/in/pranaw-kumar-710331215/">here</a> 
+
+<br>
+
+Made with ❤️ by W.
+
+---

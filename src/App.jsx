@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Header, Footer } from "./components";
 import { Outlet } from "react-router-dom";
-import { ThemeContext, ThemeProvider } from "./contexts";
+import { ThemeProvider } from "./contexts";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,21 +25,21 @@ function App() {
       dispatch(updateOfflineTime(timeDiff));
     }
 
-    const themeFromStorage = localStorage.getItem('theme')
+    const themeFromStorage = localStorage.getItem("theme");
 
-    themeFromStorage && setThemeMode (themeFromStorage)
+    themeFromStorage && setThemeMode(themeFromStorage);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   useEffect(() => {
+    // if (!lastSeenTime || lastSeenTime-Date.now() >= 5000) return;
     var lastSeenUpdateRef = setInterval(() => {
       dispatch(updateLastSeen(Date.now()));
     }, 100);
 
     return () => clearInterval(lastSeenUpdateRef);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //This is to update the timeRemaining in all ongoing tasks
@@ -61,12 +61,12 @@ function App() {
 
   const toLightTheme = () => {
     setThemeMode("light");
-    localStorage.setItem('theme', 'light')
+    localStorage.setItem("theme", "light");
   };
 
   const toDarkTheme = () => {
     setThemeMode("dark");
-    localStorage.setItem('theme', 'dark')
+    localStorage.setItem("theme", "dark");
   };
 
   return (

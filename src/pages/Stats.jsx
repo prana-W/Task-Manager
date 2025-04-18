@@ -15,7 +15,7 @@ function Stats() {
         </div>
 
         <Button
-          btnText="Go Back"
+          btnText="← Go Back"
           onClick={() => {
             navigate("/");
           }}
